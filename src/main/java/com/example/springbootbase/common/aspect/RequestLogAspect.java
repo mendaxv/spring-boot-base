@@ -24,16 +24,15 @@ public class RequestLogAspect {
     /**
      * 定义切点
      */
-    @Pointcut("execution(public * com.example.base.controller..*.*(..))")
+    @Pointcut("execution(public * com.example.springbootbase.controller..*.*(..))")
     public void webLog() {}
 
     /**
      * 在切点之前织入
      * @param joinPoint
-     * @throws Throwable
      */
     @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint) throws Throwable {
+    public void doBefore(JoinPoint joinPoint) {
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
