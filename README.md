@@ -1,8 +1,8 @@
 # spring-boot-base
 
-![](https://img.shields.io/badge/java-1.8-brightgreen)
-![](https://img.shields.io/badge/spring%20boot-2.5.5-green)
-![](https://img.shields.io/badge/maven-3.8.1-orange)  
+![](https://img.shields.io/badge/JDK-1.8-brightgreen)
+![](https://img.shields.io/badge/Spring%20Boot-2.5.5-green)
+![](https://img.shields.io/badge/Maven-3.8.1-orange)  
 
 spring boot基础项目搭建脚手架，目前添加了如下功能：
 - 统一返回：自定义返回json格式
