@@ -1,5 +1,5 @@
 spring:
   profiles:
-    active: dev
+    active: @env@
   application:
-    name: spring-boot-base
+    name: spring-boot-base  #应用名称

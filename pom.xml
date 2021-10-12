@@ -45,19 +45,75 @@
         </dependency>
     </dependencies>
 
+    <!-- Maven profiles多环境配置-->
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <!-- 设置默认激活这个配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <!-- 预发环境 -->
+        <profile>
+            <id>pre</id>
+            <properties>
+                <env>pre</env>
+            </properties>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <!-- 自定义包名 -->
+        <finalName>base</finalName>
+        <!--当filtering开关打开时，使用到的过滤器属性文件列表。 -->
+        <!--项目配置信息中诸如${spring.version}之类的占位符会被属性文件中的实际值替换掉 -->
+        <filters>
+            <filter>src/main/resources/application-${env}.yml</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <!--先排除application开头的配置文件，打包的时候，要手动删除其它环境的配置文件，不然其它环境的敏感信息就都打包进去了-->
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。 -->
+                <!--filtering 需要设置为 true，这样在include的时候，才会把配置文件中的@env@ 这个maven`变量`替换成当前环境的对应值  -->
+                <filtering>true</filtering>
+                <includes>
+                    <!--引入所需环境的配置文件-->
+                    <include>application.yml</include>
+                    <include>application-${env}.yml</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
